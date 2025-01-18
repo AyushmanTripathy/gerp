@@ -1,0 +1,27 @@
+{
+  "name": "gerp",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "gen-types": "kysely-codegen --out-file ./src/lib/db.d.ts",
+    "dev:ts": "tsc --watch",
+    "dev:node": "nodemon dist/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/pg": "^8.11.10",
+    "kysely-codegen": "^0.17.0",
+    "typescript": "^5.7.3"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "kysely": "^0.27.5",
+    "pg": "^8.13.1"
+  }
+}

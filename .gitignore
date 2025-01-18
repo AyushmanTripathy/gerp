@@ -1,0 +1,5 @@
+node_modules
+ps
+.env
+dist
+src/lib/db.d.ts
