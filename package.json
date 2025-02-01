@@ -5,6 +5,7 @@
   "scripts": {
     "build": "tsc",
     "gen-types": "kysely-codegen --out-file ./src/lib/db.d.ts",
+    "initdb": "node dist/lib/initDB.js",
     "dev:ts": "tsc --watch",
     "dev:node": "nodemon dist/index.js"
   },
@@ -13,14 +14,22 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
+    "@types/cookie-parser": "^1.4.8",
     "@types/express": "^5.0.0",
+    "@types/express-ejs-layouts": "^2.5.4",
     "@types/pg": "^8.11.10",
     "kysely-codegen": "^0.17.0",
     "typescript": "^5.7.3"
   },
   "dependencies": {
+    "bcrypt": "^5.1.1",
+    "cookie-parser": "^1.4.7",
     "dotenv": "^16.4.7",
+    "ejs": "^3.1.10",
     "express": "^4.21.2",
+    "express-ejs-layouts": "^2.5.1",
+    "jwt-simple": "^0.5.6",
     "kysely": "^0.27.5",
     "pg": "^8.13.1"
   }

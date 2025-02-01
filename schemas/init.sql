@@ -1,16 +1,16 @@
 create type user_auth_type as enum('faculty', 'student', 'admin');
 
 create table user_auth (
-  id char(16) primary key,
-  pass_hash char(256) not null,
+  id varchar(16) primary key,
+  pass_hash varchar(256) not null,
   user_type user_auth_type not null,
-  is2FA char(128)
+  is2FA varchar(128)
 );
 
 create table faculty_details (
   id serial primary key,
   name varchar(128) not null,
-  empid char(16) references user_auth(id)
+  empid varchar(16) unique references user_auth(id)
 );
 
 create table section_details (
@@ -33,7 +33,7 @@ create table course_incharge (
 
 create table student_details (
   id serial primary key,
-  rollno char(16) references user_auth(id),
+  rollno varchar(16) unique references user_auth(id),
   section_id integer references section_details(id),
   name varchar(128) not null
 );

@@ -1,6 +1,7 @@
 ## TODO
 
 1. create SQL schema
+1. reduce size of jwt token by using local storage
 1. add non unique indexes to improve performance
 
 ## Features
