@@ -43,4 +43,9 @@ router.post("/auth/login", async (req, res) => {
   }
 });
 
+router.get("/auth/logout", (req, res) => {
+  res.clearCookie("auth");
+  res.redirect("/auth/login");
+});
+
 export default router;
