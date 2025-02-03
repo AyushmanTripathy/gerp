@@ -19,3 +19,11 @@ export async function create(
     .returning("id")
     .executeTakeFirstOrThrow();
 }
+
+export async function getStudentsInSection(sectionid: number) {
+  return await db
+    .selectFrom("student_details")
+    .select(["id", "name", "rollno"])
+    .where("section_id", "=", sectionid)
+    .execute();
+}

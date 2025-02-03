@@ -33,7 +33,7 @@ router.post("/auth/login", async (req, res) => {
     const userDetails = await validate(body.username, body.password);
     const token = encode(userDetails, JWT_SECRET);
     res.cookie("auth", token, {
-      maxAge: 60000,
+      maxAge: 600000,
       httpOnly: true,
       sameSite: "strict",
     });

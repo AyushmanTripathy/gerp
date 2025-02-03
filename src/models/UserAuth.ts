@@ -41,7 +41,7 @@ export async function validate(username: string, password: string) {
   if (user.user_type == "faculty")
     query = db
       .selectFrom("faculty_details")
-      .select(["id", "empid"])
+      .select(["id", "name", "empid"])
       .where("empid", "=", user_id);
   else if (user.user_type == "student")
     query = db

@@ -5,7 +5,14 @@
   <title> GERP </title>
 </head>
 <body>
-  <p> This is the layout </p>
+  <% if (typeof userInfo == "object") {%>
+  <h3> <%- userInfo.name%> (<%- userInfo.rollno || userInfo.empid %>) </h3>
+
+  <p>
+    <a href="/"> home </a>
+    <a href="/auth/logout"> Logout </a>
+  </p>
+  <% } %>
   <%- body %>
 </body>
 </html>

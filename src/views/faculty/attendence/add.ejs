@@ -1,0 +1,103 @@
+
+<form>
+  <label for="topics"> Topics Covered </label>
+  <input type="text" required id="topics">
+  <label for="count"> Hours Count </label>
+  <input type="number" id="count" min="0" required max="5" value="1">
+  <button type="submit"> Save </button>
+</form>
+
+<table id="presentTable">
+  <tr>
+    <th>
+      Present 
+      <input type="checkbox" checked onclick="flipAll(this)">
+    </th>
+    <th> Rollno </th>
+    <th> Name </th>
+  </tr>
+  <% for (const student of students) { %>
+  <tr>
+    <td> <input checked class="present" type="checkbox" data-id="<%- student.id %>" > </td>
+    <td> <%- student.rollno %> </td>
+    <td> <%- student.name %> </td>
+  </tr>
+  <% } %>
+</table>
+
+<section style="display:none" id="absentList">
+  <h3> Absent List </h3>
+  <table>
+    <tr>
+      <th> Sl No. </th>
+      <th> Rollno </th>
+      <th> Name </th>
+    </tr>
+    <% for (const i in students) { %>
+    <tr id="<%- students[i].id %>">
+      <td> <%- i %> </td>
+      <td> <%- students[i].rollno %> </td>
+      <td> <%- students[i].name %> </td>
+    </tr>
+    <% } %>
+  </table>
+  <button onclick="confirm()"> Confirm </button>
+  <button onclick="cancel()"> Cancel </button>
+</section>
+
+<script>
+  const form = document.querySelector("form");
+  const absentList = document.getElementById("absentList");
+  let list = null;
+
+  form.onsubmit = (e) => {
+    e.preventDefault();
+    console.log("submitted")
+    
+    list = [];
+    let index = 1;
+    for (const td of document.querySelectorAll(".present")) {
+      const id = td.getAttribute("data-id");
+      const absentTr = document.getElementById(id);
+      if (td.checked) absentTr.style.display = "none";
+      else absentTr.querySelector("td").innerText = index++;
+      list.push([Number(id), td.checked ? 1 : 0]);
+    }
+    
+    absentList.style.display = "block";
+  }
+
+  function cancel() {
+    list = null;
+    absentList.style.display = "none";
+    absentList.querySelectorAll("tr").forEach(tr => {
+      tr.style.display = "block";
+    })
+  }
+
+  async function confirm() {
+    if (!list) return;
+
+    const res = await fetch(`/faculty/attendence/add`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        sectionId: <%- sectionId %>,
+        courseId: <%- courseId %>,
+        count: Number(document.getElementById("count").value),
+        topics: document.getElementById("topics").value,
+        students: list
+      }),
+    })
+
+    if (res.ok) location.href = "/faculty/attendence/";
+  }
+
+  function flipAll(e) {
+    document.querySelectorAll(".present").forEach((x) => {
+      x.checked = e.checked;
+    })
+  }
+</script>
