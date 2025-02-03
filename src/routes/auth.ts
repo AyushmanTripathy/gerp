@@ -8,7 +8,7 @@ const router = Router();
 
 router.use((req, res, next) => {
   if (req.url.startsWith("/auth")) next();
-  else if (!req.cookies.auth) res.redirect("/auth/login");
+  else if (!req.cookies.auth) res.redirect("/auth/login?redirect=" + req.url);
   else {
     try {
       const details = decode(req.cookies.auth, JWT_SECRET);
@@ -16,13 +16,13 @@ router.use((req, res, next) => {
       next();
     } catch (e) {
       res.clearCookie("auth");
-      res.redirect("/auth/login");
+      res.redirect("/auth/login?redirect=" + req.url);
     }
   }
 });
 
 router.get("/auth/login", (req, res) => {
-  res.render("login");
+  res.render("login", { redirect: req.query.redirect });
 });
 
 router.post("/auth/login", async (req, res) => {
@@ -37,7 +37,8 @@ router.post("/auth/login", async (req, res) => {
       httpOnly: true,
       sameSite: "strict",
     });
-    res.redirect("/");
+
+    res.redirect(body.redirect || "/")
   } catch (e) {
     handleError(res, e);
   }

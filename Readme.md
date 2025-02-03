@@ -2,7 +2,7 @@
 
 - [x] create SQL schema
 - [ ] add transactions to rollback changes
-- [ ] add redirect with login page
+- [x] add redirect with login page
 - [ ] frontend error page
 - [ ] reduce size of jwt token by using local storage
 - [ ] add non unique indexes to improve performance
