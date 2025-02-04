@@ -2,10 +2,10 @@
 
 - [x] create SQL schema
 - [x] add redirect with login page
+- [x] add date in attendence record
+- [x] frontend error state
 
-- [ ] add date in attendence record
 - [ ] add transactions to rollback changes
-- [ ] frontend error page
 - [ ] reduce size of jwt token by using local storage
 - [ ] add non unique indexes to improve performance
 

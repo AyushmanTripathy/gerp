@@ -1,10 +1,9 @@
-<% if (typeof message != "undefined") { %>
-  <p> <%- atob(message) %> </p>
-<% } %>
-
-<form action="/auth/login" method="POST">
-  <input type="text" name="username" placeholder="Username">
-  <input type="password" name="password" placeholder="Password">
-  <input type="text" name="redirect" hidden value="<%- redirect %>">
-  <button> Login </button>
-</form>
+<h3> Login Page </h3>
+<section>
+  <form action="/auth/login" method="POST">
+    <input type="text" name="username" placeholder="Username">
+    <input type="password" name="password" placeholder="Password">
+    <input type="text" name="redirect" hidden value="<%- redirect %>">
+    <button> Login </button>
+  </form>
+</section>
