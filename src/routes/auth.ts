@@ -8,8 +8,11 @@ const router = Router();
 
 router.use((req, res, next) => {
   if (req.url.startsWith("/auth")) next();
-  else if (!req.cookies.auth) res.redirect("/auth/login?redirect=" + req.url);
-  else {
+  else if (!req.cookies.auth) {
+    if (req.method == "GET")
+      res.status(401).redirect("/auth/login?redirect=" + req.url);
+    else res.sendStatus(401);
+  } else {
     try {
       const details = decode(req.cookies.auth, JWT_SECRET);
       res.locals = details;
@@ -38,7 +41,7 @@ router.post("/auth/login", async (req, res) => {
       sameSite: "strict",
     });
 
-    res.redirect(body.redirect || "/")
+    res.redirect(body.redirect || "/");
   } catch (e) {
     handleError(res, e);
   }

@@ -45,6 +45,17 @@ router.get("/attendence/add/:sectionId/:courseId", async (req, res) => {
 
 router.post("/attendence/add", async (req, res) => {
   try {
+    await verifySectionIncharge(
+      req.body.courseId,
+      req.body.sectionId,
+      res.locals.id
+    );
+  } catch (e) {
+    res.sendStatus(403);
+    return;
+  }
+
+  try {
     await createAttendence(
       req.body.courseId,
       req.body.sectionId,

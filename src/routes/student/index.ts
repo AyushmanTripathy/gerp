@@ -10,7 +10,6 @@ router.use((req, res, next) => {
 });
 
 router.get("/", (req, res) => {
-  console.log(res.locals);
   res.render("student/dashboard", { userInfo: res.locals });
 });
 

@@ -1,0 +1,26 @@
+<div id="loading">
+  <img src="/static/loading.gif" alt="Loading">
+  <h2> </h2>
+  <button></button>
+</div>
+
+<script>
+  const loading = document.getElementById("loading");
+  const loadingHeading = loading.querySelector("h2");
+  const loadingImg = loading.querySelector("img");
+  const loadingButton = loading.querySelector("button");
+
+  function initLoading() {
+    loading.style.display = "flex";
+  }
+  function finishLoading(msg, buttonName, handler) {
+    loadingImg.style.display = "none";
+    loadingHeading.innerText = msg;
+    loadingButton.style.display = "flex";
+    loadingButton.innerHTML = buttonName;
+    loadingButton.onclick = handler;
+  }
+  function cancelLoading() {
+    loading.style.display = "none";
+  }
+</script>
