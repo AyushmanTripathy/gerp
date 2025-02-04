@@ -1,0 +1,39 @@
+<section>
+  <h3> You are at <%- percentage %>% </h3>
+</section>
+
+<section>
+  <h3> Day Wise Attendence </h3>
+  <table>
+    <tr>
+      <th> Course </th>
+      <th> Date </th>
+      <th> Status </th>
+    </tr>
+    <% for (const row of records ) { %>
+    <tr>
+      <td> <%- row.name %> </td>
+      <td> <%- row.record_date.toLocaleDateString() %> </td>
+      <td> <%- row.present ? row.count : 0 %>/<%- row.count %> </td>
+    </tr>
+    <% } %>
+  </table>
+</section>
+
+<section>
+  <h3> Subject Wise Attendence </h3>
+  <table>
+    <tr>
+      <th> Course Name </th>
+      <th> Percentage </th>
+    </tr>
+    <% for (let i = 0; i < courseNames.length; i++) { %>
+    <tr>
+      <td> <%- courseNames[i] %> </td>
+      <td> <%- coursePercentages[i] %>% </td>
+    </tr>
+    <% } %>
+  </table>
+</section>
+
+

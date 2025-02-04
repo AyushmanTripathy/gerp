@@ -44,6 +44,7 @@ create table attendence_record (
   id serial primary key,
   course_id integer references course_details(id),
   section_id integer references section_details(id),
+  record_date date not null, 
   topics text,
   count int not null
 );
@@ -51,7 +52,8 @@ create table attendence_record (
 create table student_attendence (
   record_id integer references attendence_record(id),
   student_id integer references student_details(id),
-  present boolean
+  present boolean,
+  primary key (record_id, student_id)
 );
 
 -- EXAMS & MARKS

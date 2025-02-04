@@ -1,9 +1,11 @@
 
 <form>
+  <label for="date"> Date </label>
+  <input type="date" id="date">
   <label for="topics"> Topics Covered </label>
   <input type="text" required id="topics">
   <label for="count"> Hours Count </label>
-  <input type="number" id="count" min="0" required max="5" value="1">
+  <input type="number" id="count" min="1" required max="5" value="1">
   <button type="submit"> Save </button>
 </form>
 
@@ -48,6 +50,9 @@
 <script>
   const form = document.querySelector("form");
   const absentList = document.getElementById("absentList");
+  const date = document.getElementById("date");
+
+  date.value = new Date();
   let list = null;
 
   form.onsubmit = (e) => {
@@ -88,6 +93,7 @@
         courseId: <%- courseId %>,
         count: Number(document.getElementById("count").value),
         topics: document.getElementById("topics").value,
+        recordDate: date.value,
         students: list
       }),
     })

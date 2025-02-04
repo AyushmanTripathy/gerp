@@ -50,6 +50,7 @@ router.post("/attendence/add", async (req, res) => {
       req.body.sectionId,
       req.body.topics,
       req.body.count,
+      req.body.recordDate,
       req.body.students
     );
     res.sendStatus(200);
