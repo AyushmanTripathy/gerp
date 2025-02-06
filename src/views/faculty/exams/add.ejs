@@ -1,0 +1,91 @@
+<%- include("../../loading") %>
+
+<form>
+  <label for="topics"> Name </label>
+  <input type="text" required id="name">
+  <label for="date"> Date </label>
+  <input type="date" required id="date">
+  <label for="max_mark"> Total Mark </label>
+  <input type="number"  min="0" required id="max_mark">
+  <button type="submit"> Save </button>
+</form>
+
+<table id="marksTable">
+  <tr>
+    <th> Rollno </th>
+    <th> Name </th>
+    <th> Mark </th>
+  </tr>
+  <% for (const student of students) { %>
+  <tr>
+    <td> <%- student.rollno %> </td>
+    <td> <%- student.name %> </td>
+    <td> <input class="mark" type="number" min="0" data-id="<%- student.id %>" > </td>
+  </tr>
+  <% } %>
+</table>
+
+<section style="display:none" id="confirmMenu">
+  <button onclick="confirm()"> Confirm </button>
+  <button onclick="cancel()"> Cancel </button>
+</section>
+
+<script>
+  const form = document.querySelector("form");
+  const confirmMenu = document.getElementById("confirmMenu");
+
+  let list = null;
+
+  form.onsubmit = (e) => {
+    e.preventDefault();
+    console.log("submitted")
+    
+    const maxMark = Number(document.getElementById("max_mark").value)
+
+    list = [];
+    let index = 1;
+    let correct = true;
+    for (const input of document.querySelectorAll(".mark")) {
+      const id = input.getAttribute("data-id");
+      const mark = Number(input.value);
+      if (!input.value || 0 > mark || mark > maxMark) {
+        correct = false;
+        input.value = "";
+      }
+      else list.push([Number(id), mark]);
+    }
+    
+    if (correct) confirmMenu.style.display = "block";
+  }
+
+  function cancel() {
+    list = null;
+    confirmMenu.style.display = "none";
+  }
+
+  async function confirm() {
+    if (!list) return;
+    
+    initLoading();
+
+    const res = await fetch(`/faculty/exams/add`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        sectionId: <%- sectionId %>,
+        courseId: <%- courseId %>,
+        maxMark: Number(document.getElementById("max_mark").value),
+        name: document.getElementById("name").value,
+        recordDate: document.getElementById("date").value,
+        marks: list
+      }),
+    })
+
+    if (res.ok) 
+      finishLoading("Successfully Added", "Back", () => location.href = "/faculty/exams");
+    else
+      finishLoading("Failed to Add", "Retry", () => cancelLoading());
+  }
+</script>

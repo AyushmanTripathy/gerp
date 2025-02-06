@@ -1,0 +1,21 @@
+<p> Add Exam </p>
+
+<table>
+  <tr>
+    <th> Section Name </th>
+    <th> Course Name </th>
+  </tr>
+  <% for (const detail of details) { %>
+  <tr>
+    <td>
+      <%- detail.sectionName %>,
+    </td>
+    <td>
+      <%- detail.courseName %>
+    </td>
+    <td>
+      <a href="/faculty/exams/add/<%- detail.sectionId%>/<%- detail.courseId %>"> Add </a>
+    </td>
+  </tr>
+  <% } %>
+</table>

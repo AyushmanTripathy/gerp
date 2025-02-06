@@ -58,16 +58,17 @@ create table student_attendence (
 
 -- EXAMS & MARKS
 
-create table exam_details (
+create table exam_record (
   id serial primary key,
   course_id integer references course_details(id),
   section_id integer references section_details(id),
   max_mark int not null,
-  name char(16) not null
+  name varchar(64) not null,
+  record_date date not null
 );
 
 create table student_marks (
-  exam_id integer references exam_details(id),
+  exam_id integer references exam_record(id),
   student_id integer references student_details(id),
   mark int not null,
   primary key (exam_id, student_id)
