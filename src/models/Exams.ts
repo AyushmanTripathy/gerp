@@ -33,3 +33,15 @@ export async function create(
 
   const query = await db.insertInto("student_marks").values(rows).execute();
 }
+
+export async function getStudentMarks(studentId: number, sectionId: number) {
+  const query = db
+    .selectFrom("exam_record")
+    .where("section_id", "=", sectionId)
+    .innerJoin("course_details", "course_details.id", "course_id")
+    .innerJoin("student_marks", "exam_record.id", "student_marks.exam_id")
+    .where("student_id", "=", studentId)
+    .select(["course_details.name as course", "exam_record.name", "record_date", "mark", "max_mark"])
+
+  return await query.execute();
+}

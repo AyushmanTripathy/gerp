@@ -31,5 +31,5 @@ export async function addCourseIncharge(
       section_id: sectionId,
       incharge: facultyId,
     })
-    .executeTakeFirst();
+    .executeTakeFirstOrThrow();
 }

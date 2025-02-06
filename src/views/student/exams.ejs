@@ -1,0 +1,19 @@
+<section>
+  <h3> Exam Marks </h3>
+  <table>
+    <tr>
+      <th> Course </th>
+      <th> Exam </th>
+      <th> Date </th>
+      <th> Mark </th>
+    </tr>
+    <% for (const exam of exams) { %>
+    <tr>
+      <td> <%- exam.course %> </td>
+      <td> <%- exam.name %> </td>
+      <td> <%- exam.record_date.toLocaleDateString() %> </td>
+      <td> <%- exam.mark %>/<%- exam.max_mark %> </td>
+    </tr>
+    <% } %>
+  </table>
+</section>
