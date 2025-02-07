@@ -19,6 +19,13 @@ export async function getSectionsWithProctor(proctorId: number) {
     .execute();
 }
 
+export async function getSectionLists() {
+  return await db
+    .selectFrom("section_details")
+    .select(["id", "name"])
+    .execute();
+}
+
 export async function addCourseIncharge(
   sectionId: number,
   courseId: number,

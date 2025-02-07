@@ -1,0 +1,55 @@
+<%- include("../../loading") %>
+
+<h2> Create Student </h2>
+
+<form>
+  <label for="name"> Name </label>
+  <input type="text" required id="name">
+  <label for="empid"> Rollno </label>
+  <input type="text" required id="rollno">
+  <label for="sectionId"> Section </label>
+  <select id="sectionId" name="sectionId">
+  
+  <% for (const section of sections) { %>
+    <option value="<%- section.id %>"> <%- section.name %> </option>
+  <% } %>
+
+  </select>
+  <label for="password"> Password </label>
+  <input type="password" required id="password">
+  <button type="submit"> Save </button>
+</form>
+
+<script>
+  const form = document.querySelector("form");
+
+  form.onsubmit = async (e) => {
+    e.preventDefault();
+    console.log("submitted")
+
+    initLoading();
+
+    try {
+    const res = await fetch(`/admin/student/add`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: document.getElementById("name").value,
+        password: document.getElementById("password").value,
+        rollno: document.getElementById("rollno").value,
+        sectionId: document.getElementById("sectionId").value
+      }),
+    })
+
+    if (res.ok) 
+      finishLoading("Successfully Added", "Back", () => location.href = "/admin/student");
+    else
+      finishLoading("Failed to Add", "Retry", () => cancelLoading());
+
+    } catch (e) {
+      finishLoading("Failed to Add", "Retry", () => cancelLoading());
+    }
+  }
+</script>

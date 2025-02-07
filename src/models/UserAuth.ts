@@ -37,6 +37,8 @@ export async function validate(username: string, password: string) {
   if (!(await compare(password, user.pass_hash)))
     throw RequestError(401, "Invalid password");
 
+  if (user.user_type == "admin") return { type: user.user_type };
+
   let query = null;
   if (user.user_type == "faculty")
     query = db
@@ -51,7 +53,6 @@ export async function validate(username: string, password: string) {
   else throw RequestError(400, "Invalid user type");
 
   const details = await query.execute();
-  if (!details.length)
-    throw RequestError(401, "Details not found");
+  if (!details.length) throw RequestError(401, "Details not found");
   return { type: user.user_type, ...details[0] };
 }

@@ -7,6 +7,9 @@ export async function create(
   password: string,
   name: string
 ) {
+  if (!name || !rollno || !sectionId || !password)
+    throw "Invalid details"
+
   const userId = trimUserId(rollno);
   await userCreate("student", userId, password);
   return await db

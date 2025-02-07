@@ -1,0 +1,46 @@
+<%- include("../../loading") %>
+
+<h2> Create Faculty </h2>
+
+<form>
+  <label for="name"> Name </label>
+  <input type="text" required id="name">
+  <label for="empid"> EmpID </label>
+  <input type="text" required id="empid">
+  <label for="password"> Password </label>
+  <input type="password" required id="password">
+  <button type="submit"> Save </button>
+</form>
+
+<script>
+  const form = document.querySelector("form");
+
+  form.onsubmit = async (e) => {
+    e.preventDefault();
+    console.log("submitted")
+
+    initLoading();
+
+    try {
+    const res = await fetch(`/admin/faculty/add`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: document.getElementById("name").value,
+        password: document.getElementById("password").value,
+        empid: document.getElementById("empid").value,
+      }),
+    })
+
+    if (res.ok) 
+      finishLoading("Successfully Added", "Back", () => location.href = "/admin/faculty");
+    else
+      finishLoading("Failed to Add", "Retry", () => cancelLoading());
+
+    } catch (e) {
+      finishLoading("Failed to Add", "Retry", () => cancelLoading());
+    }
+  }
+</script>

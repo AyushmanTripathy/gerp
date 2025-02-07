@@ -7,9 +7,12 @@ import { create as createFaculty } from "../models/Faculty";
 import { addCourseIncharge, create as createSection } from "../models/Section";
 import { create as createStudent } from "../models/Student";
 import { create as createCourse } from "../models/Courses";
+import { create as createAuth } from "../models/UserAuth";
 
 init();
 async function init() {
+  const admin = await createAdmin(process.env.ADMIN_PASSWORD || "");
+  console.log("created admin")
   const fac1 = await createFaculty("GVS Narayana", "GVSN", "a");
   const fac2 = await createFaculty("Kedarnath Panda", "kedar", "a");
   console.log("created faculties");
@@ -38,4 +41,8 @@ async function init() {
 
   console.log("exiting successfully");
   db.destroy();
+}
+
+async function createAdmin(password: string) {
+  const admin = await createAuth("admin", "admin", password);
 }
