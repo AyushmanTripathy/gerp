@@ -1,46 +1,60 @@
 <%- include("../../loading") %>
 
-<h2> Create Faculty </h2>
+  <h3> Create Faculty </h3>
 
-<form>
-  <label for="name"> Name </label>
-  <input type="text" required id="name">
-  <label for="empid"> EmpID </label>
-  <input type="text" required id="empid">
-  <label for="password"> Password </label>
-  <input type="password" required id="password">
-  <button type="submit"> Save </button>
-</form>
+  <section>
+    <form>
+      <label for="name"> Name </label>
+      <input type="text" required id="name">
+      <label for="empid"> EmpID </label>
+      <input type="text" required id="empid">
+      <label for="password"> Password </label>
+      <input type="password" required id="password">
+      <label for="confirm"> Confirm Password </label>
+      <input type="password" required id="confirmPassword">
+      <button type="submit"> Save </button>
+    </form>
+  </section>
 
-<script>
-  const form = document.querySelector("form");
+  <script>
+    const form = document.querySelector("form");
+    const confirmPassword = document.getElementById("confirmPassword");
+    const password = document.getElementById("password");
 
-  form.onsubmit = async (e) => {
-    e.preventDefault();
-    console.log("submitted")
-
-    initLoading();
-
-    try {
-    const res = await fetch(`/admin/faculty/add`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name: document.getElementById("name").value,
-        password: document.getElementById("password").value,
-        empid: document.getElementById("empid").value,
-      }),
-    })
-
-    if (res.ok) 
-      finishLoading("Successfully Added", "Back", () => location.href = "/admin/faculty");
-    else
-      finishLoading("Failed to Add", "Retry", () => cancelLoading());
-
-    } catch (e) {
-      finishLoading("Failed to Add", "Retry", () => cancelLoading());
+    confirmPassword.onchange = () => {
+      if (confirmPassword.value != password.value)
+        confirmPassword.setCustomValidity("Passwords Dont match");
+      else
+        confirmPassword.setCustomValidity("");
     }
-  }
-</script>
+    form.onsubmit = async (e) => {
+      e.preventDefault();
+      console.log("submitted")
+      if (password.value != confirmPassword.value)
+        return console.log("passwords dont match");
+
+      initLoading();
+
+      try {
+        const res = await fetch(`/admin/faculty/add`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name: document.getElementById("name").value,
+            password: password.value,
+            empid: document.getElementById("empid").value,
+          }),
+        })
+
+        if (res.ok)
+          finishLoading("Successfully Added", "Back", () => location.href = "/admin");
+        else
+          finishLoading("Failed to Add", "Retry", () => cancelLoading());
+
+      } catch (e) {
+        finishLoading("Failed to Add", "Retry", () => cancelLoading());
+      }
+    }
+  </script>

@@ -1,10 +1,11 @@
 import { Router } from "express";
 import { getStudentsInSection } from "../../models/Student";
 import { getSectionsAndCourses } from "../../models/Faculty";
-import { verifySectionIncharge } from "../../models/Courses";
+import { getCourseName, verifySectionIncharge } from "../../models/Courses";
 import { create as createAttendence } from "../../models/AttendenceRecord";
 import { handleError } from "../../lib/errors";
 import { create as createExam } from "../../models/Exams";
+import { getSectionName } from "../../models/Section";
 
 const router = Router();
 
@@ -35,12 +36,18 @@ router.get("/exams/add/:sectionId/:courseId", async (req, res) => {
     return;
   }
 
-  res.render("faculty/exams/add", {
-    userInfo: res.locals,
-    sectionId,
-    courseId,
-    students: await getStudentsInSection(sectionId),
-  });
+  try {
+    res.render("faculty/exams/add", {
+      userInfo: res.locals,
+      sectionId,
+      sectionName: (await getSectionName(sectionId)).name,
+      courseName: (await getCourseName(courseId)).name,
+      courseId,
+      students: await getStudentsInSection(sectionId),
+    });
+  } catch (e) {
+    handleError(res, { code: 404, message: "Not Found" });
+  }
 });
 
 router.post("/exams/add", async (req, res) => {
@@ -88,12 +95,18 @@ router.get("/attendence/add/:sectionId/:courseId", async (req, res) => {
     return;
   }
 
-  res.render("faculty/attendence/add", {
-    userInfo: res.locals,
-    sectionId,
-    courseId,
-    students: await getStudentsInSection(sectionId),
-  });
+  try {
+    res.render("faculty/attendence/add", {
+      userInfo: res.locals,
+      sectionId,
+      sectionName: (await getSectionName(sectionId)).name,
+      courseName: (await getCourseName(courseId)).name,
+      courseId,
+      students: await getStudentsInSection(sectionId),
+    });
+  } catch (e) {
+    handleError(res, { code: 404, message: "Not Found" });
+  }
 });
 
 router.post("/attendence/add", async (req, res) => {

@@ -1,4 +1,4 @@
-<p> Add Exam </p>
+<h3> Add Exam </h3>
 
 <table>
   <tr>
@@ -6,16 +6,16 @@
     <th> Course Name </th>
   </tr>
   <% for (const detail of details) { %>
-  <tr>
-    <td>
-      <%- detail.sectionName %>,
-    </td>
-    <td>
-      <%- detail.courseName %>
-    </td>
-    <td>
-      <a href="/faculty/exams/add/<%- detail.sectionId%>/<%- detail.courseId %>"> Add </a>
-    </td>
-  </tr>
-  <% } %>
+    <tr>
+      <td>
+        <%- detail.sectionName %>
+      </td>
+      <td>
+        <%- detail.courseName %>
+      </td>
+      <td>
+        <a href="/faculty/exams/add/<%- detail.sectionId%>/<%- detail.courseId %>"> Select </a>
+      </td>
+    </tr>
+    <% } %>
 </table>

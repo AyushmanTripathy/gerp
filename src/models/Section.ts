@@ -11,6 +11,14 @@ export async function create(name: string, proctor: number) {
     .executeTakeFirstOrThrow();
 }
 
+export async function getSectionName(sectionId: number) {
+  return await db
+    .selectFrom("section_details")
+    .where("id", "=", sectionId)
+    .select("name")
+    .executeTakeFirstOrThrow();
+}
+
 export async function getSectionsWithProctor(proctorId: number) {
   return await db
     .selectFrom("section_details")

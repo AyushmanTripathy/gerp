@@ -1,14 +1,20 @@
 <%- include("../../loading") %>
 
-<form>
-  <label for="date"> Date </label>
-  <input type="date" required id="date">
-  <label for="topics"> Topics Covered </label>
-  <input type="text" required id="topics">
-  <label for="count"> Hours Count </label>
-  <input type="number" id="count" min="1" required max="5" value="1">
-  <button type="submit"> Save </button>
-</form>
+<section>
+  <h3> <%- courseName %> <br> ( Section <%- sectionName %> ) </h3>
+</section>
+
+<section>
+  <form>
+    <label for="date"> Date </label>
+    <input type="date" required id="date">
+    <label for="topics"> Topics Covered </label>
+    <input type="text" required id="topics">
+    <label for="count"> Hours Count </label>
+    <input type="number" id="count" min="1" required max="5" value="1">
+    <button type="submit"> Save </button>
+  </form>
+</section>
 
 <table id="presentTable">
   <tr>
@@ -28,7 +34,7 @@
   <% } %>
 </table>
 
-<section style="display:none" id="absentList">
+<dialog id="absentList">
   <h3> Absent List </h3>
   <table>
     <tr>
@@ -46,7 +52,7 @@
   </table>
   <button onclick="confirm()"> Confirm </button>
   <button onclick="cancel()"> Cancel </button>
-</section>
+</dialog>
 
 <script>
   const form = document.querySelector("form");
@@ -70,18 +76,19 @@
       list.push([Number(id), td.checked ? 1 : 0]);
     }
     
-    absentList.style.display = "block";
+    absentList.showModal();
   }
 
   function cancel() {
     list = null;
-    absentList.style.display = "none";
+    absentList.close();
     absentList.querySelectorAll("tr").forEach(tr => {
       tr.style.display = "block";
     })
   }
 
   async function confirm() {
+    absentList.close();
     if (!list) return;
     
     initLoading();

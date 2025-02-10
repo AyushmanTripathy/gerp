@@ -1,6 +1,4 @@
-<section>
-  <h3> You are at <%- percentage %>% </h3>
-</section>
+<h3> You are at <%- percentage %>% </h3>
 
 <section>
   <h3> Day Wise Attendence </h3>
@@ -11,12 +9,12 @@
       <th> Status </th>
     </tr>
     <% for (const row of records ) { %>
-    <tr>
-      <td> <%- row.name %> </td>
-      <td> <%- row.record_date.toLocaleDateString() %> </td>
-      <td> <%- row.present ? row.count : 0 %>/<%- row.count %> </td>
-    </tr>
-    <% } %>
+      <tr>
+        <td> <%- row.name %> </td>
+        <td> <%- row.record_date.toLocaleDateString() %> </td>
+        <td> <%- row.present ? row.count : 0 %>/<%- row.count %> </td>
+      </tr>
+      <% } %>
   </table>
 </section>
 
@@ -27,13 +25,11 @@
       <th> Course Name </th>
       <th> Percentage </th>
     </tr>
-    <% for (let i = 0; i < courseNames.length; i++) { %>
-    <tr>
-      <td> <%- courseNames[i] %> </td>
-      <td> <%- coursePercentages[i] %>% </td>
-    </tr>
-    <% } %>
+    <% for (let i=0; i < courseNames.length; i++) { %>
+      <tr>
+        <td> <%- courseNames[i] %> </td>
+        <td> <%- coursePercentages[i] %>% </td>
+      </tr>
+      <% } %>
   </table>
 </section>
-
-
