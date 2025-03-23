@@ -73,3 +73,4 @@ create table student_marks (
   mark int not null,
   primary key (exam_id, student_id)
 );
+

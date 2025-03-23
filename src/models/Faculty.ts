@@ -2,8 +2,7 @@ import db from "../db";
 import { create as userCreate, trimUserId } from "./UserAuth";
 
 export async function create(name: string, empid: string, password: string) {
-  if (!name || !empid || !password)
-    throw "Invalid details"
+  if (!name || !empid || !password) throw "Invalid details";
 
   const userId = trimUserId(empid);
   await userCreate("faculty", userId, password);
@@ -37,5 +36,12 @@ export async function getSectionsAndCourses(facultyId: number) {
       "section_details.name as sectionName",
       "section_details.id as sectionId",
     ])
+    .execute();
+}
+
+export async function getAllFaculty() {
+  return await db
+    .selectFrom("faculty_details")
+    .select(["id", "name"])
     .execute();
 }

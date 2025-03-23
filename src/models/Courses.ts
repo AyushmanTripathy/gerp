@@ -10,6 +10,10 @@ export async function create(name: string) {
     .executeTakeFirstOrThrow();
 }
 
+export async function getAllCourseNames() {
+  return await db.selectFrom("course_details").select(["id", "name"]).execute();
+}
+
 export async function getCourseName(courseId: number) {
   return await db
     .selectFrom("course_details")

@@ -1,0 +1,43 @@
+<%- include("../../loading") %>
+
+  <h3> Create Section </h3>
+
+  <section>
+    <form>
+      <label for="name"> Name </label>
+      <input type="text" required id="name">
+      <label for="proctor"> Proctor </label>
+      <select name="proctor" required id="proctor">
+        <option value=""> Select Proctor </option>
+        <% for (const faculty of faculties) { %>
+          <option value="<%- faculty.id %>"> <%- faculty.name %> </option>
+        <% } %>
+      </select>
+
+      <label for="selectCourse"> Add Course and Incharge </label>
+      <div id="selectedIncharges" class="selectIncharge">
+        <p> Course </p>
+        <p> Assigned Faculty </p>
+      </div>
+      <div class="selectIncharge">
+        <select id="selectCourse">
+          <option value=""> Select Course </option> 
+          <% for (const course of courses) { %>
+            <option value="<%- course.id %>"> <%- course.name %> </option>
+          <% } %>
+        </select>
+        <select id="selectFaculty">
+          <option value=""> Select Faculty </option>
+          <% for (const faculty of faculties) { %>
+            <option value="<%- faculty.id %>"> <%- faculty.name %> </option>
+          <% } %>
+        </select>
+      </div>
+
+      <button type="button" onclick="addCourseIncharge()"> Add course </button>
+      <button type="submit"> Save </button>
+    </form>
+  </section>
+
+<script src="/static/add_section.js">
+</script>

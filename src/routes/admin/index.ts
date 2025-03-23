@@ -1,7 +1,9 @@
 import { Router } from "express";
-import { create as createFaculty } from "../../models/Faculty";
+import { create as createFaculty, getAllFaculty } from "../../models/Faculty";
 import { create as createStudent } from "../../models/Student";
+import { addCourseIncharge, create as createSection } from "../../models/Section";
 import { getSectionLists } from "../../models/Section";
+import { getAllCourseNames } from "../../models/Courses";
 
 const router = Router();
 
@@ -13,6 +15,26 @@ const userInfo = {
 router.use((req, res, next) => {
   if (res.locals.type != "admin") res.redirect("/");
   else next();
+});
+
+router.get("/section/add", async (req, res) => {
+  res.render("admin/section/add", {
+    userInfo,
+    courses: await getAllCourseNames(),
+    faculties: await getAllFaculty(),
+  });
+});
+
+router.post("/section/add", async (req, res) => {
+  try {
+    const sec = await createSection(req.body.name, req.body.proctorId);
+    for (const [courseId, facultyId] of req.body.incharges) {
+      await addCourseIncharge(sec.id, courseId, facultyId);
+    }
+    res.sendStatus(200);
+  } catch(e) {
+    res.sendStatus(400);
+  }
 });
 
 router.get("/faculty/add", async (req, res) => {

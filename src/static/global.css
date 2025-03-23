@@ -60,6 +60,16 @@ button {
   outline: none;
 }
 
+.selectIncharge {
+  display: grid;
+  column-gap: 10px;
+  grid-template-columns: 1fr 1fr;
+}
+
+label {
+  font-weight: bold;
+}
+
 #loading {
   position: fixed;
   top: 0;
