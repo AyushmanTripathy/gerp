@@ -2,7 +2,9 @@ import { Router } from "express";
 import { handleError } from "../../lib/errors";
 import { getBulkAttendence } from "../../models/AttendenceRecord";
 import { getStudentMarks } from "../../models/Exams";
+import { readFileSync } from "fs";
 
+const timeTable = JSON.parse(readFileSync("timetable.json", "utf-8"));
 const router = Router();
 
 router.use((req, res, next) => {
@@ -11,7 +13,8 @@ router.use((req, res, next) => {
 });
 
 router.get("/", (req, res) => {
-  res.render("student/dashboard", { userInfo: res.locals });
+  const schedule = timeTable[new Date().getDay()];
+  res.render("student/dashboard", { userInfo: res.locals, schedule });
 });
 
 router.get("/exams", async (req, res) => {

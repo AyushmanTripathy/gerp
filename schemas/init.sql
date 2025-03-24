@@ -4,7 +4,13 @@ create table user_auth (
   id varchar(16) primary key,
   pass_hash varchar(256) not null,
   user_type user_auth_type not null,
-  is2FA varchar(128)
+  is2FA boolean not null,
+  email varchar(256) not null
+);
+
+create table otp (
+  id serial primary key,
+  otp int not null
 );
 
 create table faculty_details (

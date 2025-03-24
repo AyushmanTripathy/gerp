@@ -11,7 +11,7 @@ export async function create(
     throw "Invalid details"
 
   const userId = trimUserId(rollno);
-  await userCreate("student", userId, password);
+  await userCreate("student", userId, password, "student@gmail.com", false);
   return await db
     .insertInto("student_details")
     .values({

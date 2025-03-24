@@ -8,7 +8,9 @@ export const trimUserId = (x: string) => x.slice(0, 16);
 export async function create(
   type: UserAuthType,
   username: string,
-  password: string
+  password: string,
+  email: string,
+  is2FA: boolean
 ) {
   const userId = trimUserId(username);
   const pass_hash = await hash(password, 10);
@@ -17,8 +19,9 @@ export async function create(
     .values({
       pass_hash,
       user_type: type,
-      is2fa: null,
       id: userId,
+      is2fa: is2FA,
+      email,
     })
     .executeTakeFirst();
   return userId;
@@ -28,7 +31,7 @@ export async function validate(username: string, password: string) {
   const user_id = trimUserId(username);
   const user = await db
     .selectFrom("user_auth")
-    .select(["pass_hash", "user_type"])
+    .select(["email", "is2fa", "pass_hash", "user_type"])
     .where("id", "=", user_id)
     .executeTakeFirst();
 
@@ -37,7 +40,8 @@ export async function validate(username: string, password: string) {
   if (!(await compare(password, user.pass_hash)))
     throw RequestError(401, "Invalid password");
 
-  if (user.user_type == "admin") return { type: user.user_type };
+  if (user.user_type == "admin")
+    return { type: user.user_type, email: user.email, is2FA: user.is2fa };
 
   let query = null;
   if (user.user_type == "faculty")
@@ -54,5 +58,10 @@ export async function validate(username: string, password: string) {
 
   const details = await query.execute();
   if (!details.length) throw RequestError(401, "Details not found");
-  return { type: user.user_type, ...details[0] };
+  return {
+    type: user.user_type,
+    email: user.email,
+    is2FA: user.is2fa,
+    ...details[0],
+  };
 }

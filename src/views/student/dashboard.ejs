@@ -2,3 +2,19 @@
 
 <a href="/student/attendence"> Attendence </a>
 <a href="/student/exams"> Exams </a>
+
+<h3> Schedule for today </h3>
+<table>
+  <tr>
+    <td> Time </td>
+    <% for (const period of schedule) { %>
+      <td> <%- period.start %> - <%- period.end %> </td>
+    <% } %>
+  </tr>
+  <tr>
+    <td> Subject </td>
+    <% for (const period of schedule) { %>
+      <td> <%- period.sub %> </td>
+    <% } %>
+  </tr>
+</table>

@@ -1,0 +1,12 @@
+<h1> OTP </h1>
+<section>
+  <form action="/auth/login" method="POST">
+    <p> OTP has been sent to <%- email %>. </p>
+    <input type="text" name="otp" placeholder="Your OTP">
+    <input type="text" name="otpID" hidden value="<%- otpID %>">
+    <input type="text" name="redirect" hidden value="<%- redirect %>">
+    <input type="text" name="username" hidden value="<%- username %>">
+    <input type="text" name="password" hidden value="<%- password %>">
+    <button> Verify </button>
+  </form>
+</section>

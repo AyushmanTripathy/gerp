@@ -5,7 +5,7 @@ export async function create(name: string, empid: string, password: string) {
   if (!name || !empid || !password) throw "Invalid details";
 
   const userId = trimUserId(empid);
-  await userCreate("faculty", userId, password);
+  await userCreate("faculty", userId, password, "lol@gmai.com", true);
   return await db
     .insertInto("faculty_details")
     .values({

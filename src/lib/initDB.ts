@@ -73,5 +73,5 @@ function randomName() {
 }
 
 async function createAdmin(password: string) {
-  const admin = await createAuth("admin", "admin", password);
+  const admin = await createAuth("admin", "admin", password, "admin@giet.edu", true);
 }
