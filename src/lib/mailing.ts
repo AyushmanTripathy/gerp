@@ -27,3 +27,7 @@ export async function sendMail(mails: string[], subject: string, message: string
     html: `<b>${message}</b>`,
   });
 }
+
+export async function sendOTP(mail: string, otp: number) {
+  return await sendMail([mail], otp)
+}
