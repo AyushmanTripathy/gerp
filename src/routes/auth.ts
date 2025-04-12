@@ -4,6 +4,7 @@ import { handleError, RequestError } from "../lib/errors";
 import { decode, encode } from "jwt-simple";
 import { JWT_SECRET } from "../lib/secrets";
 import { create as createOTP, verify as verifyOTP } from "../models/OTP";
+import { sendOTP } from "../lib/mailing";
 
 const router = Router();
 
@@ -25,11 +26,6 @@ router.use((req, res, next) => {
   }
 });
 
-router.get("/auth/otp", async (req, res) => {
-  const row = await createOTP();
-  res.send({ id: row.id });
-});
-
 router.get("/auth/login", (req, res) => {
   res.render("login", { redirect: req.query.redirect });
 });
@@ -44,6 +40,7 @@ router.post("/auth/login", async (req, res) => {
     if (userDetails.is2FA) {
       if (!body.otpID || !body.otp) {
         const otp = await createOTP();
+        await sendOTP(userDetails.email, otp.otp)
         res.render("otp", {
           username: body.username,
           password: body.password,

@@ -1,9 +1,10 @@
 import { Router } from "express";
 import { create as createFaculty, getAllFaculty } from "../../models/Faculty";
 import { create as createStudent } from "../../models/Student";
-import { addCourseIncharge, create as createSection } from "../../models/Section";
+import { addCourseIncharge, create as createSection, getSectionAll } from "../../models/Section";
 import { getSectionLists } from "../../models/Section";
 import { getAllCourseNames } from "../../models/Courses";
+import { handleError } from "../../lib/errors";
 
 const router = Router();
 

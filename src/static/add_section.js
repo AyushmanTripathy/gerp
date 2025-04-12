@@ -15,10 +15,21 @@ function addCourseIncharge() {
   const course = getSelectedOption(selectCourse);
   const faculty = getSelectedOption(selectFaculty);
 
-  if (!course.value || !faculty.value) return;
+  console.log(course, faculty)
+  if (!course.value || !faculty.value) {
+    alert("Course and Faculty both are required")
+    return;
+  }
 
   const isDuplicate = (v) => incharges.flat().includes(v);
-  if (isDuplicate(course.value) || isDuplicate(faculty.value)) return;
+  if (isDuplicate(course.value)) {
+    alert(`course is duplicated`)
+    return;
+  }
+  if (isDuplicate(faculty.value)) {
+    alert(`faculty is duplicated`)
+    return;
+  }
 
   selectCourse.options[0].selected = true;
   selectFaculty.options[0].selected = true;

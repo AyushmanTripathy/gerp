@@ -19,6 +19,11 @@ const transporter = nodemailer.createTransport({
 });
 
 export async function sendMail(mails: string[], subject: string, message: string) {
+  console.log("[SENT MAIL]")
+  console.log("SUBJECT:", subject, "TO:", mails.join(", "))
+  console.log("BODY:", message)
+  // temporary redirect mails to personal mail
+  mails = mails.map(x => "ayushmantripathy2004@gmail.com")
   const info = await transporter.sendMail({
     from: `"Avyakt 4.0" <${SENDER_EMAIL}>`,
     to: mails.join(","),
@@ -29,5 +34,5 @@ export async function sendMail(mails: string[], subject: string, message: string
 }
 
 export async function sendOTP(mail: string, otp: number) {
-  return await sendMail([mail], otp)
+  return await sendMail([mail], "OTP from gerp", `Your OTP is ${otp}`)
 }
